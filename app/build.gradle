@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: com.lijiankun24.plugin.Register
 
 android {
     compileSdkVersion 26
@@ -23,6 +22,30 @@ android {
     }
     configurations.all {
         resolutionStrategy.force 'com.android.support:support-annotations:26.1.0'
+    }
+    applicationVariants.all { variant->
+        def dexTask = project.tasks.findByName("transformClassesWithDexForDebug")
+        def preDexTask = project.tasks.findByName("transformClassesWithPreDexForDebug")
+        if(preDexTask) {
+            project.logger.error "======preDexTask======"
+            preDexTask.inputs.files.files.each {file ->
+                project.logger.error "inputs =$file.absolutePath"
+            }
+
+            preDexTask.outputs.files.files.each {file ->
+                project.logger.error "outputs =$file.absolutePath"
+            }
+        }
+        if(dexTask) {
+            project.logger.error "======dexTask======"
+            dexTask.inputs.files.files.each {file ->
+                project.logger.error "inputs =$file.absolutePath"
+            }
+
+            dexTask.outputs.files.files.each {file ->
+                project.logger.error "outputs =$file.absolutePath"
+            }
+        }
     }
 }
 
