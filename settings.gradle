@@ -1,1 +1,1 @@
-include ':app', ':BuildSrc', ':hack'
+include ':app', ':buildSrc' , ':hack'

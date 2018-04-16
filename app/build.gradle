@@ -1,7 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: com.lijiankun24.plugin.Register
+
+apply plugin: com.lijiankun24.plugin.Hotfix
+//se {
+//    student{
+//        name "lijiankun24"
+//        phone "13166668888"
+//    }
+//
+//    myName "SExtention"
+//}
 
 android {
     compileSdkVersion 26

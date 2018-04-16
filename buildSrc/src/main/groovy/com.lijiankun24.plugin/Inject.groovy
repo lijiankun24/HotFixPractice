@@ -7,8 +7,7 @@ import org.apache.commons.io.FileUtils
 
 /**
  * Created by AItsuki on 2016/4/7.
- * 注入代码分为两种情况，一种是目录，需要遍历里面的class进行注入
- * 另外一种是jar包，需要先解压jar包，注入代码之后重新打包成jar
+ * 注入代码需要遍历里面的 .class 进行注入
  */
 public class Inject {
 
@@ -23,7 +22,7 @@ public class Inject {
     }
 
     /**
-     * 遍历该目录下的所有class，对所有class进行代码注入。
+     * 遍历该目录下的所有 .class，对所有 .class 进行代码注入。
      * 其中以下class是不需要注入代码的：
      * --- 1. R文件相关
      * --- 2. 配置文件相关（BuildConfig）
@@ -55,43 +54,6 @@ public class Inject {
         }
     }
 
-    /**
-     * 这里需要将jar包先解压，注入代码后再重新生成jar包
-     * @path jar包的绝对路径
-     */
-    public static void injectJar(String path) {
-        if (path.endsWith(".jar")) {
-            File jarFile = new File(path)
-
-            // jar包解压后的保存路径
-            String jarZipDir = jarFile.getParent() + "/" + jarFile.getName().replace('.jar', '')
-
-            // 解压jar包, 返回jar包中所有class的完整类名的集合（带.class后缀）
-            List classNameList = JarZipUtil.unzipJar(path, jarZipDir)
-
-            // 删除原来的jar包
-            jarFile.delete()
-
-            // 注入代码
-            pool.appendClassPath(jarZipDir)
-            for (String className : classNameList) {
-                if (className.endsWith(".class")
-                        && !className.contains('R$')
-                        && !className.contains('R.class')
-                        && !className.contains("BuildConfig.class")) {
-                    className = className.substring(0, className.length() - 6)
-                    injectClass(className, jarZipDir)
-                }
-            }
-
-            // 从新打包jar
-            JarZipUtil.zipJar(jarZipDir, path)
-
-            // 删除目录
-            FileUtils.deleteDirectory(new File(jarZipDir))
-        }
-    }
-
     private static void injectClass(String className, String path) {
         CtClass c = pool.getCtClass(className)
         if (c.isFrozen()) {
@@ -103,7 +65,7 @@ public class Inject {
         if (cts == null || cts.length == 0) {
             insertNewConstructor(c)
         } else {
-            cts[0].insertBeforeBody("System.out.println(com.aitsuki.hack.AntilazyLoad.class);")
+            cts[0].insertBeforeBody("System.out.println(com.lijiankun24.hack.AntilazyLoad.class);")
         }
         c.writeFile(path)
         c.detach()
@@ -111,7 +73,7 @@ public class Inject {
 
     private static void insertNewConstructor(CtClass c) {
         CtConstructor constructor = new CtConstructor(new CtClass[0], c)
-        constructor.insertBeforeBody("System.out.println(com.aitsuki.hack.AntilazyLoad.class);")
+        constructor.insertBeforeBody("System.out.println(com.lijiankun24.hack.AntilazyLoad.class);")
         c.addConstructor(constructor)
     }
 

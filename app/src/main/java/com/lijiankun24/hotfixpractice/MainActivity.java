@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, LoadBugClass.getBugClass(), Toast.LENGTH_SHORT).show();
-                Log.i("lijk", "The msg is " + LoadBugClass.getBugClass());
+                Log.i(TAG, "The msg is " + LoadBugClass.getBugClass());
             }
         });
     }
