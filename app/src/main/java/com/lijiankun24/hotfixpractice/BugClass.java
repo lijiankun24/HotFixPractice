@@ -9,6 +9,8 @@ package com.lijiankun24.hotfixpractice;
 public class BugClass {
 
     public String getMsg() {
-        return "This class has bug";
+//        String msg = null;
+        String msg = "test";
+        return String.valueOf(msg.length());
     }
 }

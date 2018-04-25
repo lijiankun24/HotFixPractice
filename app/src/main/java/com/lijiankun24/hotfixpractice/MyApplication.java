@@ -1,6 +1,7 @@
 package com.lijiankun24.hotfixpractice;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -18,18 +19,38 @@ import dalvik.system.DexClassLoader;
 
 public class MyApplication extends Application {
 
+    private static final String TAG = "MyApplication";
+
+    public MyApplication() {
+        Log.i(TAG, "Constructor");
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        Log.i(TAG, "attachBaseContext");
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-
-        // 获取补丁，如果存在就执行注入操作
-        String dexPath = Environment.getExternalStorageDirectory().getAbsolutePath().concat("/patch_dex.jar");
-        File file = new File(dexPath);
-        if (file.exists()) {
-            inject(dexPath);
-        } else {
-            Log.e("BugFixApplication", dexPath + "不存在");
-        }
+        Log.i(TAG, "onCreate");
+//        // 将 /assets/hack.jar 拷贝至 App 私有目录下
+//        File hackDexPath = new File(getDir("dex", Context.MODE_PRIVATE), "hack.jar");
+//        Utils.prepareDex(this.getApplicationContext(), hackDexPath, "hack.jar");
+//        // 加载 hack.jar，避免 CLASS_ISPREVERIFIED 异常
+//        if (hackDexPath.exists()) {
+//            inject(hackDexPath.getAbsolutePath());
+//        }
+//
+//        // 获取补丁，如果存在就执行注入操作
+//        String dexPath = Environment.getExternalStorageDirectory().getAbsolutePath().concat("/patch_dex.jar");
+//        File file = new File(dexPath);
+//        if (file.exists()) {
+//            inject(dexPath);
+//        } else {
+//            Log.e("BugFixApplication", dexPath + "不存在");
+//        }
     }
 
     /**
