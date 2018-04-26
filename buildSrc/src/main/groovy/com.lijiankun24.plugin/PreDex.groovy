@@ -60,6 +60,7 @@ public class PreDex extends Transform {
                 // 注入代码
                 Inject.injectDir(directoryInput.file.absolutePath)
 
+                // 获取output目录
                 def dest = outputProvider.getContentLocation(directoryInput.name,
                         directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
                 // 将input的目录复制到output指定目录

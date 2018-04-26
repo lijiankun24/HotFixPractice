@@ -9,8 +9,11 @@ package com.lijiankun24.hotfixpractice;
 public class BugClass {
 
     public String getMsg() {
-//        String msg = null;
-        String msg = "test";
+        String msg = null;
+//        String msg = "test";
         return String.valueOf(msg.length());
+
+//        Student student = new Student("lijiankun", 10, null);
+//        return String.valueOf(student.getSchool().length());
     }
 }

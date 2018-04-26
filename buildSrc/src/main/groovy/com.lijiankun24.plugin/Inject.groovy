@@ -11,7 +11,7 @@ import org.apache.commons.io.FileUtils
  */
 public class Inject {
 
-    private static ClassPool pool= ClassPool.getDefault()
+    private static ClassPool pool = ClassPool.getDefault()
 
     /**
      * 添加classPath到ClassPool
@@ -41,7 +41,7 @@ public class Inject {
                         && !filePath.contains('R.class')
                         && !filePath.contains("BuildConfig.class")
                         // 这里是application的名字，可以通过解析清单文件获得，先写死了
-                        && !filePath.contains("HotPatchApplication.class")) {
+                        && !filePath.contains("MyApplication.class")) {
                     // 这里是应用包名，也能从清单文件中获取，先写死
                     int index = filePath.indexOf("com\\aitsuki\\hotpatchdemo")
                     if (index != -1) {
